@@ -6,6 +6,6 @@ output "public_ec2_ips_master" {
 
 output "public_ec2_ips_workers" {
   value = [
-    for instance in aws_instance.master :  join("", ["http://", instance.public_ip])
+    for instance in aws_instance.worker :  join("", ["http://", instance.public_ip])
   ]
 }

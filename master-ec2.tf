@@ -8,7 +8,7 @@ resource "aws_instance" "master" {
   vpc_security_group_ids = [aws_security_group.my-sg.id]
   user_data = templatefile("${path.module}/master-script.sh", {
     file_content = "Master online",
-    cidr         = "10.0.0.0/16"
+    configd         = ""
   })
 
   tags = {

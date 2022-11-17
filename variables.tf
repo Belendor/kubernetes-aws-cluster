@@ -19,7 +19,7 @@ variable "ec2_count_master" {
 variable "ec2_count_workers" {
   description = "Number of EC2 instances"
   type        = number
-  default     = 2
+  default     = 0
 }
 
 variable "rules" {

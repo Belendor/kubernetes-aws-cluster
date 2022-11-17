@@ -35,7 +35,7 @@ source ~/.bash_profile
 echo "Go installed" > /var/www/html/index.html
 
 # Installing cri-docker
-cd cri-dockerd
+cd /cri-dockerd
 mkdir bin
 go build -o bin/cri-dockerd
 mkdir -p /usr/local/bin
@@ -58,26 +58,3 @@ sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
 
 echo "kubeadm installed" > /var/www/html/index.html
-
-# Initiate cluster
-sudo kubeadm init --pod-network-cidr=10.0.0.0/16 --cri-socket=unix:///var/run/cri-dockerd.sock
-mkdir -p $HOME/.kube
-sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-sudo chown $(id -u):$(id -g) $HOME/.kube/config
-
-echo "Cluster initiated" > /var/www/html/index.html
-
-# Calico for networking
-curl https://raw.githubusercontent.com/projectcalico/calico/v3.24.5/manifests/calico.yaml -O
-kubectl apply -f calico.yaml
-
-echo "Calico installed" > /var/www/html/index.html
-
-# # Installing Dashboard
-# kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.6.1/aio/deploy/recommended.yaml
-
-# echo "Dashboard. Done" > /var/www/html/index.html
-
-
-# Untaint master node to deploy to master
-# kubectl taint node ip-10-0-101-47 node-role.kubernetes.io/control-plane:NoSchedule-
