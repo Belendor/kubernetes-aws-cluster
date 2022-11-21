@@ -10,14 +10,20 @@ variable "vpc_cidr_block" {
   default     = "10.0.0.0/16"
 }
 
+variable "ec2_type_master" {
+  description = "Instance type"
+  type        = string
+  default     = "t2.medium"
+}
+
 variable "ec2_count_master" {
-  description = "Number of EC2 instances"
+  description = "Number of Master instances"
   type        = number
   default     = 1
 }
 
 variable "ec2_count_workers" {
-  description = "Number of EC2 instances"
+  description = "Number of Worker instances"
   type        = number
   default     = 0
 }
@@ -52,6 +58,21 @@ variable "rules" {
     },
     {
       port        = 8443
+      proto       = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    },
+    {
+      port        = 8080
+      proto       = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    },
+    {
+      port        = 10248
+      proto       = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    },
+    {
+      port        = 6443
       proto       = "tcp"
       cidr_blocks = ["0.0.0.0/0"]
     }
