@@ -1,7 +1,7 @@
 resource "aws_instance" "master" {
   count = var.ec2_count_master
 
-  ami                    = "ami-09f2fb1ed8d5d3df2"
+  ami                    = var.ec2_ami
   instance_type          = var.ec2_type_master
   key_name               = aws_key_pair.generated_key.key_name
   subnet_id              = module.vpc.public_subnets[count.index % length(module.vpc.public_subnets)]
@@ -12,10 +12,5 @@ resource "aws_instance" "master" {
 
   tags = {
     Name = "kubernetes-master-node"
-  }
-
-  ebs_block_device {
-    device_name = "/dev/sda1"
-    volume_size = 16
   }
 }

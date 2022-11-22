@@ -16,6 +16,12 @@ variable "ec2_type_master" {
   default     = "t2.medium"
 }
 
+variable "ec2_ami" {
+  description = "AMI ID"
+  type        = string
+  default     = "ami-0914982bb64a36219"
+}
+
 variable "ec2_count_master" {
   description = "Number of Master instances"
   type        = number
@@ -25,54 +31,21 @@ variable "ec2_count_master" {
 variable "ec2_count_workers" {
   description = "Number of Worker instances"
   type        = number
-  default     = 0
+  default     = 1
 }
 
 variable "rules" {
   type = list(object({
-    port        = number
+    from_port   = number
+    to_port     = number
     proto       = string
     cidr_blocks = list(string)
   }))
 
   default = [
     {
-      port        = 80
-      proto       = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
-    },
-    {
-      port        = 22
-      proto       = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
-    },
-    {
-      port        = 6443
-      proto       = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
-    },
-    {
-      port        = 443
-      proto       = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
-    },
-    {
-      port        = 8443
-      proto       = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
-    },
-    {
-      port        = 8080
-      proto       = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
-    },
-    {
-      port        = 10248
-      proto       = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
-    },
-    {
-      port        = 6443
+      from_port   = 1
+      to_port     = 40000
       proto       = "tcp"
       cidr_blocks = ["0.0.0.0/0"]
     }
